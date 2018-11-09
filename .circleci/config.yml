@@ -40,7 +40,7 @@ jobs:
           command: |
             chmod 600 ~/.ssh/id_*
             scp -o StrictHostKeyChecking=no -r /root/project/install.aws.tools.sh circleci@comply-circleci-poc-core.dequelabs.com:/home/circleci
-            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'bash -s' < install.aws.tools.sh 
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'sudo bash -s' < install.aws.tools.sh 
             scp -o StrictHostKeyChecking=no -r /root/project/saas-light-11-8-s3-comply-installer.tar.gz circleci@comply-circleci-poc-core.dequelabs.com:/home/circleci
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'sudo tar -zxvf saas-light-11-8-s3-comply-installer.tar.gz' 
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'cd install-comply; sudo ./prereq-setup.sh core' 
@@ -51,7 +51,7 @@ jobs:
           command: |
             chmod 600 ~/.ssh/id_*
             scp -o StrictHostKeyChecking=no -r /root/project/install.aws.tools.sh circleci@comply-circleci-poc-analysis.dequelabs.com:/home/circleci
-            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'bash -s' < install.aws.tools.sh
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'sudo bash -s' < install.aws.tools.sh
             scp -o StrictHostKeyChecking=no -r /root/project/saas-light-11-8-s3-comply-installer.tar.gz circleci@comply-circleci-poc-analysis.dequelabs.com:/home/circleci
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'sudo tar -zxvf saas-light-11-8-s3-comply-installer.tar.gz'
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'cd install-comply; sudo ./prereq-setup.sh selenium'
