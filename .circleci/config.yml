@@ -1,0 +1,62 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run:
+          name: Greeting
+          command: echo Hello, world.
+      - run:
+          name: Print the Current Time
+          command: date
+      - run:
+          name: orient base dir
+          command: pwd
+      - run:
+          name: identify repo objects 
+          command: ls
+      - add_ssh_keys:
+          fingerprints:
+            - "8a:bf:e9:01:4c:05:f0:71:4c:d5:4e:5c:b1:91:aa:c3"
+      - run: echo "deb  http://deb.debian.org/debian  stretch main" >> /etc/apt/sources.list
+      - run: echo "deb-src  http://deb.debian.org/debian  stretch main" >> /etc/apt/sources.list
+      - run: cat /etc/apt/sources.list
+      - run: apt update
+      - run:
+          name: Install SCP 
+          command: apt -y install openssh-client 
+      - run:
+          name: Install AWS CLI tools
+          command: sudo apt-get update
+          command: sudo apt-get install -y python-pip python-dev
+          command: sudo pip install awscli
+          command: aws --version
+
+      - run:
+          name: Install comply core on EC2
+          command: |
+            chmod 600 ~/.ssh/id_*
+            scp -o StrictHostKeyChecking=no -r /root/project/saas-light-11-8-s3-comply-installer.tar.gz circleci@18.207.220.62:/home/circleci
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'sudo tar -zxvf saas-light-11-8-s3-comply-installer.tar.gz' 
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'cd install-comply; sudo ./prereq-setup.sh core' 
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'cd install-comply; sudo ./install-comply.sh core' 
+
+      - run:
+          name: Install comply analysis on EC2
+          command: |
+            chmod 600 ~/.ssh/id_*
+            scp -o StrictHostKeyChecking=no -r /root/project/saas-light-11-8-s3-comply-installer.tar.gz circleci@18.206.204.164:/home/circleci
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'sudo tar -zxvf saas-light-11-8-s3-comply-installer.tar.gz'
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'cd install-comply; sudo ./prereq-setup.sh selenium'
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'cd install-comply; sudo ./install-comply.sh selenium'
+  deploy:
+    machine:
+        enabled: true
+    steps:
+      - run:
+          name: Execute SCP to EC2
+          command: |
+            chmod 600 ~/.ssh/id_*
+      
