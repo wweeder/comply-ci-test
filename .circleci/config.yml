@@ -39,7 +39,7 @@ jobs:
           name: Install comply core on EC2
           command: |
             chmod 600 ~/.ssh/id_*
-            scp -o StrictHostKeyChecking=no -r /root/project/saas-light-11-8-s3-comply-installer.tar.gz circleci@18.207.220.62:/home/circleci
+            scp -o StrictHostKeyChecking=no -r /root/project/saas-light-11-8-s3-comply-installer.tar.gz circleci@comply-circleci-poc-core.dequelabs.com:/home/circleci
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'sudo tar -zxvf saas-light-11-8-s3-comply-installer.tar.gz' 
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'cd install-comply; sudo ./prereq-setup.sh core' 
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'cd install-comply; sudo ./install-comply.sh core' 
@@ -48,7 +48,7 @@ jobs:
           name: Install comply analysis on EC2
           command: |
             chmod 600 ~/.ssh/id_*
-            scp -o StrictHostKeyChecking=no -r /root/project/saas-light-11-8-s3-comply-installer.tar.gz circleci@18.206.204.164:/home/circleci
+            scp -o StrictHostKeyChecking=no -r /root/project/saas-light-11-8-s3-comply-installer.tar.gz circleci@comply-circleci-poc-analysis:/home/circleci
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'sudo tar -zxvf saas-light-11-8-s3-comply-installer.tar.gz'
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'cd install-comply; sudo ./prereq-setup.sh selenium'
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'cd install-comply; sudo ./install-comply.sh selenium'
