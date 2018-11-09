@@ -29,10 +29,11 @@ jobs:
           command: apt -y install openssh-client 
       - run:
           name: Install AWS CLI tools
-          command: sudo apt-get update
-          command: sudo apt-get install -y python-pip python-dev
-          command: sudo pip install awscli
-          command: aws --version
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y python-pip python-dev
+            sudo pip install awscli
+            aws --version
 
       - run:
           name: Install comply core on EC2
