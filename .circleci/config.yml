@@ -48,10 +48,11 @@ jobs:
           name: Install comply analysis on EC2
           command: |
             chmod 600 ~/.ssh/id_*
-            scp -o StrictHostKeyChecking=no -r /root/project/saas-light-11-8-s3-comply-installer.tar.gz circleci@comply-circleci-poc-analysis:/home/circleci
+            scp -o StrictHostKeyChecking=no -r /root/project/saas-light-11-8-s3-comply-installer.tar.gz circleci@comply-circleci-poc-analysis.dequelabs.com:/home/circleci
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'sudo tar -zxvf saas-light-11-8-s3-comply-installer.tar.gz'
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'cd install-comply; sudo ./prereq-setup.sh selenium'
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'cd install-comply; sudo ./install-comply.sh selenium'
+
   deploy:
     machine:
         enabled: true
