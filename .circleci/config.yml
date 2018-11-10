@@ -6,12 +6,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Greeting
-          command: echo Hello, world.
-      - run:
-          name: Print the Current Time
-          command: date
-      - run:
           name: orient base dir
           command: pwd
       - run:
@@ -52,7 +46,7 @@ jobs:
           name: Execute core prereq, install, and start_order scripts on EC2
           command: |
             chmod 600 ~/.ssh/id_*
-            scp -o StrictHostKeyChecking=no -r /root/project/ci-scripts/prereq-setup.sh circleci@comply-circleci-poc-core.dequelabs.com:/home/circleci
+            scp -o StrictHostKeyChecking=no -r /root/project/ci-scripts/core-invoker.sh circleci@comply-circleci-poc-core.dequelabs.com:/home/circleci
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'sudo bash -s' < core-invoker.sh
 
       - run:
@@ -72,7 +66,7 @@ jobs:
           name: Execute analysis prereq, install, and start_order scripts on EC2 
           command: |
             chmod 600 ~/.ssh/id_*
-            scp -o StrictHostKeyChecking=no -r /root/project/ci-scripts/prereq-setup.sh circleci@comply-circleci-poc-analysis.dequelabs.com:/home/circleci
+            scp -o StrictHostKeyChecking=no -r /root/project/ci-scripts/analysis-invoker.sh circleci@comply-circleci-poc-analysis.dequelabs.com:/home/circleci
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'sudo bash -s' < analysis-invoker.sh
 
   deploy:
