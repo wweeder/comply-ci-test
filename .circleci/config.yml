@@ -48,6 +48,8 @@ jobs:
           command: |
             chmod 600 ~/.ssh/id_*
             scp -o StrictHostKeyChecking=no -r /root/project/ci-scripts/core-invoker.sh circleci@comply-circleci-poc-core.dequelabs.com:/home/circleci
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'ls'
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'ls install-comply'
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'sudo bash -s' < install-comply/core-invoker.sh
 
       - run:
