@@ -49,25 +49,11 @@ jobs:
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'sudo bash -s' < install.aws.tools.sh 
 
       - run:
-          name: Install comply core prereqs on EC2
+          name: Execute core prereq, install, and start_order scripts on EC2
           command: |
             chmod 600 ~/.ssh/id_*
             scp -o StrictHostKeyChecking=no -r /root/project/ci-scripts/prereq-setup.sh circleci@comply-circleci-poc-core.dequelabs.com:/home/circleci
-            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'sudo bash -s' < prereq-setup.sh core
-
-      - run:
-          name: Install comply core on EC2
-          command: |
-            chmod 600 ~/.ssh/id_*
-            scp -o StrictHostKeyChecking=no -r /root/project/ci-scripts/install-comply.sh circleci@comply-circleci-poc-core.dequelabs.com:/home/circleci
-            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'sudo bash -s' < install-comply.sh core
-
-      - run:
-          name: Run comply core start order on EC2
-          command: |
-            chmod 600 ~/.ssh/id_*
-            scp -o StrictHostKeyChecking=no -r /root/project/ci-scripts/start_order.sh circleci@comply-circleci-poc-core.dequelabs.com:/home/circleci
-            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'sudo bash -s' < start_order.sh core
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'sudo bash -s' < core-invoker.sh
 
       - run:
           name: Place installer on Analysis EC2
@@ -83,25 +69,11 @@ jobs:
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'sudo bash -s' < install.aws.tools.sh
 
       - run:
-          name: Install comply Analysis prereqs on EC2
+          name: Execute analysis prereq, install, and start_order scripts on EC2 
           command: |
             chmod 600 ~/.ssh/id_*
             scp -o StrictHostKeyChecking=no -r /root/project/ci-scripts/prereq-setup.sh circleci@comply-circleci-poc-analysis.dequelabs.com:/home/circleci
-            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'sudo bash -s' < prereq-setup.sh analysis
-
-      - run:
-          name: Install comply Analysis on EC2
-          command: |
-            chmod 600 ~/.ssh/id_*
-            scp -o StrictHostKeyChecking=no -r /root/project/ci-scripts/install-comply.sh circleci@comply-circleci-poc-analysis.dequelabs.com:/home/circleci
-            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'sudo bash -s' < install-comply.sh analysis
-
-      - run:
-          name: Run comply analysis start order on EC2
-          command: |
-            chmod 600 ~/.ssh/id_*
-            scp -o StrictHostKeyChecking=no -r /root/project/ci-scripts/start_order.sh circleci@comply-circleci-poc-analysis.dequelabs.com:/home/circleci
-            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'sudo bash -s' < start_order.sh analysis
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'sudo bash -s' < analysis-invoker.sh
 
   deploy:
     machine:
