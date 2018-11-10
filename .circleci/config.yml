@@ -44,11 +44,22 @@ jobs:
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'sudo bash -s' < install.aws.tools.sh 
 
       - run:
+          name: Execute core prereq script on EC2
+          command: |
+            chmod 600 ~/.ssh/id_*
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'cd install-comply; sudo ./prereq-setup.sh core'
+
+      - run:
+          name: Execute core install script on EC2
+          command: |
+            chmod 600 ~/.ssh/id_*
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'cd install-comply; sudo ./install-comply.sh core'
+
+      - run:
           name: Execute core prereq, install, and start_order scripts on EC2
           command: |
             chmod 600 ~/.ssh/id_*
-            scp -o StrictHostKeyChecking=no -r /root/project/ci-scripts/core-invoker.sh circleci@comply-circleci-poc-core.dequelabs.com:/home/circleci
-            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'cd install-comply; sudo ./prereq-setup.sh core'
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'cd install-comply; sudo ./start_order.sh core'
 
       - run:
           name: Place installer on Analysis EC2
