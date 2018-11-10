@@ -56,9 +56,11 @@ jobs:
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'cd install-comply; sudo ./install-comply.sh core'
 
       - run:
-          name: Execute core prereq, install, and start_order scripts on EC2
+          name: Execute core start_order scripts on EC2
           command: |
             chmod 600 ~/.ssh/id_*
+            echo "sleeping 60 seconds for keycloak initializations..."
+            sleep 60
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-core.dequelabs.com 'cd install-comply; sudo ./start_order.sh core'
 
       - run:
@@ -66,6 +68,7 @@ jobs:
           command: |
             chmod 600 ~/.ssh/id_*
             scp -o StrictHostKeyChecking=no -r /root/project/saas-light-11-8-s3-comply-installer.tar.gz circleci@comply-circleci-poc-analysis.dequelabs.com:/home/circleci
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'tar -zxvf saas-light-11-8-s3-comply-installer.tar.gz'
 
       - run:
           name: Install AWS tools on Analysis EC2
@@ -75,11 +78,24 @@ jobs:
             ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'sudo bash -s' < install.aws.tools.sh
 
       - run:
-          name: Execute analysis prereq, install, and start_order scripts on EC2 
+          name: Execute analysis prereq script on EC2
           command: |
             chmod 600 ~/.ssh/id_*
-            scp -o StrictHostKeyChecking=no -r /root/project/ci-scripts/analysis-invoker.sh circleci@comply-circleci-poc-analysis.dequelabs.com:/home/circleci
-            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'sudo bash -s' < analysis-invoker.sh
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'cd install-comply; sudo ./prereq-setup.sh analysis'
+
+      - run:
+          name: Execute analysis install script on EC2
+          command: |
+            chmod 600 ~/.ssh/id_*
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'cd install-comply; sudo ./install-comply.sh analysis'
+
+      - run:
+          name: Execute analysis start_order scripts on EC2
+          command: |
+            chmod 600 ~/.ssh/id_*
+            echo "sleeping 45 seconds for analysis component initialization."
+            sleep 45
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'cd install-comply; sudo ./start_order.sh analysis'
 
   deploy:
     machine:
