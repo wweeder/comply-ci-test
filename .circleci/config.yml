@@ -81,13 +81,13 @@ jobs:
           name: Execute analysis prereq script on EC2
           command: |
             chmod 600 ~/.ssh/id_*
-            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'cd install-comply; sudo ./prereq-setup.sh analysis'
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'cd install-comply; sudo ./prereq-setup.sh selenium'
 
       - run:
           name: Execute analysis install script on EC2
           command: |
             chmod 600 ~/.ssh/id_*
-            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'cd install-comply; sudo ./install-comply.sh analysis'
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'cd install-comply; sudo ./install-comply.sh selenium'
 
       - run:
           name: Execute analysis start_order scripts on EC2
@@ -95,7 +95,7 @@ jobs:
             chmod 600 ~/.ssh/id_*
             echo "sleeping 45 seconds for analysis component initialization."
             sleep 45
-            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'cd install-comply; sudo ./start_order.sh analysis'
+            ssh -o StrictHostKeyChecking=no circleci@comply-circleci-poc-analysis.dequelabs.com 'cd install-comply; sudo ./start_order.sh selenium'
 
   deploy:
     machine:
