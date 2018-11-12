@@ -30,6 +30,11 @@ jobs:
             aws --version
 
       - run:
+          name: S3 IAM test
+          command: |
+            aws s3 cp circlecis3test.txt s3://comply-ci/circlecis3test.txt
+
+      - run:
           name: Place installer on Core EC2
           command: |
             chmod 600 ~/.ssh/id_*
