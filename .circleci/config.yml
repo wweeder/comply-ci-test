@@ -52,13 +52,13 @@ jobs:
           name: Execute core prereq script on EC2
           command: |
             chmod 600 ~/.ssh/id_*
-            ssh -o StrictHostKeyChecking=no circleci@comply-qa-centos-core.dequelabs.com 'cd install-comply; sudo ./prereq-setup.sh core'
+            ssh -o StrictHostKeyChecking=no circleci@comply-qa-centos-core.dequelabs.com 'cd install-comply; sudo ./prereq-setup.sh core 6.2.1'
 
       - run:
           name: Execute core install script on EC2
           command: |
             chmod 600 ~/.ssh/id_*
-            ssh -o StrictHostKeyChecking=no circleci@comply-qa-centos-core.dequelabs.com 'cd install-comply; sudo ./install-comply.sh core'
+            ssh -o StrictHostKeyChecking=no circleci@comply-qa-centos-core.dequelabs.com 'cd install-comply; sudo ./install-comply.sh core 6.2.1'
 
       - run:
           name: Execute core start_order scripts on EC2
@@ -86,13 +86,13 @@ jobs:
           name: Execute analysis prereq script on EC2
           command: |
             chmod 600 ~/.ssh/id_*
-            ssh -o StrictHostKeyChecking=no circleci@comply-qa-centos-analysis.dequelabs.com 'cd install-comply; sudo ./prereq-setup.sh selenium'
+            ssh -o StrictHostKeyChecking=no circleci@comply-qa-centos-analysis.dequelabs.com 'cd install-comply; sudo ./prereq-setup.sh selenium 6.2.1'
 
       - run:
           name: Execute analysis install script on EC2
           command: |
             chmod 600 ~/.ssh/id_*
-            ssh -o StrictHostKeyChecking=no circleci@comply-qa-centos-analysis.dequelabs.com 'cd install-comply; sudo ./install-comply.sh selenium'
+            ssh -o StrictHostKeyChecking=no circleci@comply-qa-centos-analysis.dequelabs.com 'cd install-comply; sudo ./install-comply.sh selenium 6.2.1'
 
       - run:
           name: Execute analysis start_order scripts on EC2
