@@ -38,8 +38,8 @@ jobs:
           name: Place installer on Core EC2
           command: |
             chmod 600 ~/.ssh/id_*
-            scp -o StrictHostKeyChecking=no -r /root/project/saas-light-11-26-s3-comply-installer.tar.gz circleci@comply-qa-centos-core.dequelabs.com:/home/circleci
-            ssh -o StrictHostKeyChecking=no circleci@comply-qa-centos-core.dequelabs.com 'tar -zxvf saas-light-11-26-s3-comply-installer.tar.gz'
+            scp -o StrictHostKeyChecking=no -r /root/project/saas-light-11-14-s3-comply-installer.tar.gz circleci@comply-qa-centos-core.dequelabs.com:/home/circleci
+            ssh -o StrictHostKeyChecking=no circleci@comply-qa-centos-core.dequelabs.com 'tar -zxvf saas-light-11-14-s3-comply-installer.tar.gz'
 
       - run:
           name: Install AWS tools on Core EC2
@@ -72,8 +72,8 @@ jobs:
           name: Place installer on Analysis EC2
           command: |
             chmod 600 ~/.ssh/id_*
-            scp -o StrictHostKeyChecking=no -r /root/project/poc-saas-light-11-26-s3-comply-installer.tar.gz circleci@comply-qa-centos-analysis.dequelabs.com:/home/circleci
-            ssh -o StrictHostKeyChecking=no circleci@comply-qa-centos-analysis.dequelabs.com 'tar -zxvf poc-saas-light-11-26-s3-comply-installer.tar.gz'
+            scp -o StrictHostKeyChecking=no -r /root/project/poc-saas-light-11-14-s3-comply-installer.tar.gz circleci@comply-qa-centos-analysis.dequelabs.com:/home/circleci
+            ssh -o StrictHostKeyChecking=no circleci@comply-qa-centos-analysis.dequelabs.com 'tar -zxvf poc-saas-light-11-14-s3-comply-installer.tar.gz'
 
       - run:
           name: Install AWS tools on Analysis EC2
